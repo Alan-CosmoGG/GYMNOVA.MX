@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito de Compras</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header>
+    <h1>Tu Carrito</h1>
+    <nav><a href="index.html">← Seguir comprando</a></nav>
+  </header>
+
+  <section class="carrito-lista" id="listaCarrito"></section>
+
+  <footer>
+    <p>&copy; 2025 GYMNOVA MX. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const lista = document.getElementById('listaCarrito');
+
+    function renderizarCarrito() {
+      lista.innerHTML = '';
+
+      if (carrito.length === 0) {
+        lista.innerHTML = "<p>Tu carrito está vacío.</p>";
+        return;
+      }
+
+      const btnVaciar = document.createElement('button');
+      btnVaciar.textContent = "Vaciar carrito";
+      btnVaciar.className = "boton-vaciar";
+      btnVaciar.onclick = () => {
+        carrito = [];
+        localStorage.removeItem('carrito');
+        renderizarCarrito();
+      };
+      lista.appendChild(btnVaciar);
+
+      let total = 0;
+
+      carrito.forEach((producto, index) => {
+        total += producto.precio * producto.cantidad;
+
+        const div = document.createElement('div');
+        div.classList.add('producto');
+
+        div.innerHTML = `
+          <img src="${producto.imagen}" alt="${producto.nombre}">
+          <div class="producto-info">
+            <h3>${producto.nombre}</h3>
+            <p>Precio: $${producto.precio}</p>
+            <p>Cantidad: ${producto.cantidad}</p>
+            <p>Total: $${producto.precio * producto.cantidad}</p>
+          </div>
+          <button class="boton-eliminar" onclick="eliminarProducto(${index})">Eliminar</button>
+        `;
+
+        lista.appendChild(div);
+      });
+
+      const totalHTML = document.createElement('p');
+      totalHTML.innerHTML = `<strong>Total a pagar: $${total}</strong>`;
+      totalHTML.style.fontSize = "18px";
+      totalHTML.style.marginTop = "10px";
+      lista.appendChild(totalHTML);
+    }
+
+    function eliminarProducto(index) {
+      carrito.splice(index, 1);
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      renderizarCarrito();
+    }
+
+    renderizarCarrito();
+  </script>
+</body>
+</html>
+

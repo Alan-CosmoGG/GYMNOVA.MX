@@ -198,3 +198,59 @@ footer p {
   font-size: 14px;
 }
 
+
+@media (max-width: 768px) {
+  .productos {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px;
+  }
+
+  .producto {
+    width: 90%;
+  }
+
+  .carrito-lista {
+    padding: 20px 10px;
+  }
+
+  .carrito-lista .producto {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .producto-info {
+    width: 100%;
+    text-align: center;
+  }
+
+  .boton-eliminar,
+  .boton-vaciar {
+    width: 100%;
+    text-align: center;
+  }
+
+  header {
+    padding: 15px 10px;
+  }
+
+  nav a {
+    display: block;
+    margin: 10px 0;
+  }
+
+  .banner img {
+    max-height: 200px;
+  }
+
+  .carrito {
+    display: block;
+    margin: 10px auto;
+    text-align: center;
+  }
+
+  footer p {
+    font-size: 12px;
+  }
+}
